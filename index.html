@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Total Items Sold</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Total Items Sold</h1> 
+    <label for="itemsSold">Enter items sold for a new order:</label>
+    <input type="number" id="itemsSold" min="0">
+    <button onclick="addOrder()">Add Order</button>
+    <p id="totalItems"></p>
+    <script>
+        const orders = [
+            { id: 1, itemsSold: 3 },
+            { id: 2, itemsSold: 5 },
+            { id: 3, itemsSold: 2 },
+            { id: 4, itemsSold: 8 }
+        ];
+        function calculateTotalItemsSold(orders) {
+            return orders.reduce((total, order) => total + order.itemsSold, 0);
+        }
+        function addOrder() {
+            const itemsSoldInput = document.getElementById('itemsSold');
+            const itemsSold = parseInt(itemsSoldInput.value, 10);            
+            if (!isNaN(itemsSold) && itemsSold >= 0) {
+                const newOrder = {
+                    id: orders.length + 1,
+                    itemsSold: itemsSold
+                };
+                orders.push(newOrder);
+                const totalItemsSold = calculateTotalItemsSold(orders);
+                document.getElementById('totalItems').textContent = `Total Items Sold: ${totalItemsSold}`;
+                itemsSoldInput.value = '';
+            } else {
+                alert('Please enter a valid number of items sold.');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('totalItems').textContent = `Total Items Sold: ${calculateTotalItemsSold(orders)}`;
+        });
+    </script>
+</body>
+</html>
